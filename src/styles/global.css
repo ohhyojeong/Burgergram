@@ -1,0 +1,395 @@
+/* ==========================================
+  1. 폰트 및 CSS 변수 (Design Tokens)
+========================================== */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --yellow: #ffb800; 
+  --brown: #8b4513; 
+  --ink: #2c1810; 
+  --muted: #74685d;
+  --bg: #fffcf5; 
+  --surface: #fff; 
+  --line: #e8e0d2; 
+  --soft: #f3ebdd;
+  --danger: #b42318; 
+  --radius: 18px; 
+  --shadow: 0 12px 34px rgba(44,24,16,.07);
+}
+
+
+/* ==========================================
+  2. 기본 태그 초기화 및 설정
+========================================== */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "DM Sans", "Noto Sans KR", sans-serif;
+}
+
+button, input, select, textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+
+/* ==========================================
+  3. 공통 레이아웃 및 상단 네비게이션 (Topbar)
+========================================== */
+.topbar {
+  height: 76px;
+  border-bottom: 1px solid rgba(232, 224, 210, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 max(28px, calc((100vw - 1160px) / 2));
+  background: rgba(255, 252, 245, 0.94);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  backdrop-filter: blur(14px);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  font-size: 24px;
+}
+
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: var(--yellow);
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  box-shadow: inset 0 -3px 0 rgba(44, 24, 16, 0.09);
+}
+
+.brand small {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 2.2px;
+  color: var(--brown);
+  font-weight: 800;
+  margin-top: 1px;
+}
+
+.top-actions {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+}
+
+main {
+  max-width: 1120px;
+  margin: auto;
+  padding: 0 28px 72px;
+}
+
+
+/* ==========================================
+  4. 공통 버튼 스타일
+========================================== */
+.btn {
+  border: 0;
+  border-radius: 12px;
+  padding: 11px 17px;
+  font-weight: 700;
+  font-size: 13px;
+  transition: 0.18s transform, 0.18s background;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-dark {
+  background: var(--ink);
+  color: white;
+}
+.btn-dark:hover {
+  background: #4a2a1d;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.btn-yellow {
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+.btn-soft {
+  background: var(--soft);
+  color: var(--brown);
+}
+
+.icon-btn {
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: white;
+  font-size: 17px;
+}
+
+
+/* ==========================================
+  5. 폼 및 입력 필드 공통 스타일 (FeedForm 등)
+========================================== */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 15px;
+}
+
+.field label {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.field input, 
+.field select, 
+.field textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  padding: 12px;
+  background: white;
+  outline: none;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.field input:focus, 
+.field select:focus, 
+.field textarea:focus {
+  border-color: var(--yellow);
+  box-shadow: 0 0 0 3px rgba(255, 184, 0, 0.15);
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.form-submit {
+  width: 100%;
+  padding: 14px;
+  margin-top: 5px;
+}
+
+
+/* ==========================================
+  6. 카드, 상세 화면 및 댓글 스타일 (CommentSection 등)
+========================================== */
+.feed-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px 18px;
+}
+
+.feed-card {
+  min-width: 0;
+  transition: opacity 0.2s, filter 0.2s, transform 0.2s;
+}
+
+.comments {
+  background: var(--bg);
+  border-radius: 13px;
+  padding: 14px;
+  margin-top: auto;
+}
+
+.comments-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 11px;
+}
+
+.comments-head strong {
+  font-size: 13px;
+}
+
+.comments-head span {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.comment {
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 8px 0;
+  color: #51443a;
+}
+
+.comment b {
+  margin-right: 6px;
+}
+
+.comment-form {
+  display: flex;
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.comment-form input {
+  min-width: 0;
+  flex: 1;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 11px;
+  font-size: 11px;
+  outline: none;
+  background: white;
+}
+
+/* 댓글 입력창 포커스 효과 (추가됨) */
+.comment-form input:focus {
+  border-color: var(--yellow);
+  box-shadow: 0 0 0 3px rgba(255, 184, 0, 0.15);
+}
+
+.comment-form button {
+  border: 0;
+  border-radius: 10px;
+  background: var(--ink);
+  color: white;
+  padding: 0 13px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* 비활성화(disabled)된 버튼 및 입력창 처리 스타일 (추가됨) */
+.btn:disabled,
+.comment-form button:disabled,
+.comment-form input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+/* ==========================================
+  7. 인증 카드 및 공통 컴포넌트
+========================================== */
+.auth-card {
+  max-width: 440px;
+  margin: 0 auto;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 30px;
+  box-shadow: var(--shadow);
+}
+
+.auth-card .brand {
+  justify-content: center;
+  margin-bottom: 22px;
+}
+
+.auth-card h2 {
+  text-align: center;
+  margin: 0;
+  font-size: 28px;
+  letter-spacing: -1px;
+}
+
+.auth-card .sub {
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  margin: 8px 0 24px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 25px;
+  color: var(--brown);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 70px 20px;
+  background: white;
+  border: 1px dashed var(--line);
+  border-radius: 18px;
+  color: var(--muted);
+}
+
+.empty strong {
+  display: block;
+  color: var(--ink);
+  font-size: 18px;
+  margin-bottom: 7px;
+}
+
+
+/* ==========================================
+  8. 반응형 미디어 쿼리 (모바일 대응)
+========================================== */
+@media(max-width: 760px) {
+  .topbar {
+    height: 66px;
+    padding: 0 17px;
+  }
+  .brand {
+    font-size: 21px;
+  }
+  .brand-mark {
+    width: 37px;
+    height: 37px;
+  }
+  main {
+    padding: 0 17px 50px;
+  }
+  .feed-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 23px 12px;
+  }
+}
+
+@media(max-width: 430px) {
+  .feed-grid {
+    gap: 20px 10px;
+  }
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+}
