@@ -8,7 +8,7 @@ const initialUsers = [
   { id: 2, username: "user1", password: "123", role: "user" }
 ];
 
-export const AuthProvider = ({ children }) => {
+export const AuthContextPro = ({ children }) => {
   const [users, setUsers] = useLocalStorage('burger_users', initialUsers);
   const [currentUser, setCurrentUser] = useLocalStorage('burger_currentUser', null);
 

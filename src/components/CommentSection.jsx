@@ -1,12 +1,13 @@
 import React, { useState, useContext } from 'react';
-import { FeedContext } from '../context/FeedContext';
-import { AuthContext } from '../context/AuthContext';
+import { useFeed } from '../context/FeedContext';
+import { useAuth } from '../context/AuthContext';
+
 
 function CommentSection({ feedId }) {
   const [text, setText] = useState('');
   
-  const { comments = [], addComment, deleteComment } = useContext(FeedContext);
-  const { currentUser } = useContext(AuthContext);
+  const { comments, addComment, deleteComment }  = useFeed();
+  const { currentUser} = useAuth();
 
   // 문자열/숫자 타입 차이로 인한 비교 오류 방지를 위해 String()으로 감싸서 필터링
   const currentComments = Array.isArray(comments)
@@ -22,7 +23,7 @@ function CommentSection({ feedId }) {
       return;
     }
 
-    addComment(feedId, text, currentUser.username || currentUser.name);
+    addComment(feedId, currentUser, text);
     setText('');
   };
 
@@ -53,7 +54,7 @@ function CommentSection({ feedId }) {
 
                 {isMyComment && (
                   <button
-                    onClick={() => deleteComment(feedId, comment.id)}
+                    onClick={() => deleteComment(comment.id)}
                     style={{ 
                       background: 'none', 
                       border: 'none', 
