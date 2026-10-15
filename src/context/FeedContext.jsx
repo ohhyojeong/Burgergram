@@ -38,6 +38,8 @@ export const FeedProvider = ({ children }) => {
       userId: currentUser.id,
       burgerName: feedData.burgerName,
       brand: feedData.brand,
+      price: feedData.price,          // 추가
+      pattyType: feedData.pattyType,  // 추가
       image: feedData.image || "",
       content: feedData.content,
       rating: Number(feedData.rating) || 5,
