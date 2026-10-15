@@ -128,8 +128,6 @@ npm run dev
 ### 👥 팀
 
 
-| 효정 | 우정 | 형근 | 공주 |
-|:---:|:---:|:---:|:---:|
 | <img src="https://github.com/ohhyojeong.png" width="80"/> | <img src="https://github.com/amandine3235-prog.png" width="80"/>| <img src="https://github.com/ArthuriaSaber-FGO.png" width="80"/> | <img src="https://github.com/KKongKKong2da.png" width="80"/> |
 | @ohhyojeong | @amandine3235-prog | @ArthuriaSaber-FGO | @kkongkkong2da |
 | **프로젝트 구조 및 통합** | **피드 기능 개발** | **인증 및 상태 관리** | **UI/UX 디자인** |
