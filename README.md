@@ -127,11 +127,14 @@ npm run dev
 
 ### 👥 팀
 
-
+|  | |  |  |
+|:---:|:---:|:---:|:---:|
 | <img src="https://github.com/ohhyojeong.png" width="80"/> | <img src="https://github.com/amandine3235-prog.png" width="80"/>| <img src="https://github.com/ArthuriaSaber-FGO.png" width="80"/> | <img src="https://github.com/KKongKKong2da.png" width="80"/> |
 | @ohhyojeong | @amandine3235-prog | @ArthuriaSaber-FGO | @kkongkkong2da |
 | **프로젝트 구조 및 통합** | **피드 기능 개발** | **인증 및 상태 관리** | **UI/UX 디자인** |
 | React Router 설정<br>Navbar 및 HomePage<br>초기 데이터 구성<br>컴포넌트 통합 | FeedCard 및 상세 페이지<br>MyFeedPage 구현<br>게시글 수정·삭제<br>관리자 공지 표시 | 로그인 및 회원가입<br>AuthContext·FeedContext<br>localStorage 연동<br>사용자 권한 관리 | FeedForm 구현<br>CommentSection 구현<br>CSS 및 공통 디자인<br>반응형 UI 구성 |
+
+
 
 
 
