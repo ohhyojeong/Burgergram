@@ -39,12 +39,14 @@ function FeedDetailPage() {
 
   // 본인이 작성한 게시글인지 확인
   const isAuthor = currentUser?.id === feed.userId;
+  const isAdmin = currentUser?.role === 'admin';
+  const canManage = isAuthor || isAdmin;
 
   // 게시글 수정
   const handleUpdate = (updatedData) => {
 
-    if (!isAuthor) {
-      alert('본인이 작성한 게시글만 수정할 수 있습니다.');
+    if (!canManage) {
+      alert('게시글 작성자 또는 관리자만 수정할 수 있습니다.');
       return;
     }
 
@@ -58,11 +60,11 @@ function FeedDetailPage() {
   // 게시글 삭제
   const handleDelete = () => {
 
-    if (!isAuthor) {
-      alert('본인이 작성한 게시글만 삭제할 수 있습니다.');
+    
+    if (!canManage) {
+      alert('게시글 작성자 또는 관리자만 삭제할 수 있습니다.');
       return;
     }
-
     const isConfirmed = window.confirm(
       '정말 이 게시글을 삭제하시겠습니까?'
     );
@@ -170,8 +172,7 @@ function FeedDetailPage() {
               작성자 ID: {feed.userId}
             </p>
 
-            {/* 본인 게시글인 경우 수정/삭제 버튼 */}
-            {isAuthor && (
+            {canManage && (
 
               <div
                 className="feed-actions"

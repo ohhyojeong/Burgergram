@@ -7,7 +7,7 @@ function CommentSection({ feedId }) {
   const [text, setText] = useState('');
   
   const { comments, addComment, deleteComment }  = useFeed();
-  const { currentUser} = useAuth();
+  const { currentUser,users} = useAuth();
 
   // 문자열/숫자 타입 차이로 인한 비교 오류 방지를 위해 String()으로 감싸서 필터링
   const currentComments = Array.isArray(comments)
@@ -36,11 +36,13 @@ function CommentSection({ feedId }) {
       <div className="comment-list-area">
         {currentComments.length > 0 ? (
           currentComments.map((comment) => {
-            const commentUser = comment.user || comment.username;
-            const commentText = comment.text || comment.content;
-            
-            const isMyComment = currentUser && (currentUser.username === commentUser || currentUser.role === 'admin');
+            const author = users.find(user => user.id === comment.userId);
+            const commentUser = author?.username ?? '알 수 없는 사용자';
 
+            const isMyComment = currentUser && (
+              currentUser.id === comment.userId ||
+              currentUser.role === 'admin'
+            );
             return (
               <div 
                 key={comment.id} 
@@ -49,7 +51,7 @@ function CommentSection({ feedId }) {
               >
                 <div>
                   <b>@{commentUser}</b>
-                  <span>{commentText}</span>
+                  <span>{comment.content}</span>
                 </div>
 
                 {isMyComment && (
