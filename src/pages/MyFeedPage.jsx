@@ -1,10 +1,11 @@
-import React from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useFeed } from '../context/FeedContext';
 import { useAuth } from '../context/AuthContext';
 
 import FeedCard from '../components/FeedCard';
+import FeedDetail from '../components/FeedDetail';
 
 function MyFeedPage() {
 
@@ -15,6 +16,38 @@ function MyFeedPage() {
   const { currentUser } = useAuth();
 
   // 로그인하지 않은 경우
+  const myFeeds = currentUser ? feeds.filter(
+    feed => String(feed.userId) === String(currentUser.id)
+  ) : [];
+
+  const hasFeeds = myFeeds.length > 0;
+  const [selectedId, setSelectedId] = useState(null);
+  const [columns, setColumns] = useState(3);
+  const gridRef = useRef(null);
+  const detailRef = useRef(null);
+  const selectedIndex = myFeeds.findIndex(feed => feed.id === selectedId);
+  const rowEnd = selectedIndex < 0 ? -1 : Math.min(
+    myFeeds.length - 1,
+    Math.floor(selectedIndex / columns) * columns + columns - 1,
+  );
+
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return;
+    const observer = new ResizeObserver(() => {
+      setColumns(getComputedStyle(grid).gridTemplateColumns.split(' ').length);
+    });
+    observer.observe(grid);
+    return () => observer.disconnect();
+  }, [hasFeeds]);
+
+  useEffect(() => {
+    detailRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, [selectedId]);
+
+  const toggleDetail = id => setSelectedId(previous => previous === id ? null : id);
+
+
   if (!currentUser) {
     return (
       <div className="container">
@@ -29,9 +62,7 @@ function MyFeedPage() {
   }
 
   // 현재 로그인한 사용자가 작성한 게시글만 필터링
-  const myFeeds = feeds.filter(
-    (feed) => String(feed.userId) === String(currentUser.id)
-  );
+
 
   return (
     <div className="container">
@@ -62,17 +93,18 @@ function MyFeedPage() {
       ) : (
 
         /* 내가 작성한 게시글 목록 */
-        <div className="feed-grid">
-
-          {myFeeds.map((feed) => (
-            <FeedCard
-              key={feed.id}
-              feed={feed}
-            />
+        <section ref={gridRef} className="feed-grid">
+          {myFeeds.map((feed, index) => (
+            <Fragment key={feed.id}>
+              <FeedCard feed={feed} onSelect={toggleDetail} expanded={selectedId === feed.id} />
+              {index === rowEnd && (
+                <div ref={detailRef} className="feed-inline-detail">
+                  <FeedDetail key={selectedId} feedId={selectedId} onClose={() => setSelectedId(null)} />
+                </div>
+              )}
+            </Fragment>
           ))}
-
-        </div>
-
+        </section>
       )}
 
     </div>

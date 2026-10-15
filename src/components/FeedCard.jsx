@@ -1,12 +1,23 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { useFeed } from '../context/FeedContext';
 
-const FeedCard = ({ feed }) => {
+const FeedCard = ({ feed, onSelect, expanded = false }) => {
+  const { users, currentUser } = useAuth();
+  const { toggleLike } = useFeed();
+  const likedBy = feed.likedBy ?? [];
+  const isLiked = Boolean(currentUser && likedBy.some(
+    id => String(id) === String(currentUser.id)
+  ));
+
+  const author = users.find(
+    user => String(user.id) === String(feed.userId)
+  );
+
   return (
     <article className="feed-card">
 
       {/* 햄버거 이미지 */}
-      <Link to={`/feeds/${feed.id}`}>
+      <button type="button" className="feed-card-trigger" onClick={() => onSelect(feed.id)} aria-expanded={expanded}>
         {feed.image ? (
           <img
             src={feed.image}
@@ -18,7 +29,7 @@ const FeedCard = ({ feed }) => {
             🍔 이미지 없음
           </div>
         )}
-      </Link>
+      </button>
 
       {/* 게시글 정보 */}
       <div className="feed-card-content">
@@ -37,9 +48,9 @@ const FeedCard = ({ feed }) => {
 
         {/* 햄버거 이름 */}
         <h3>
-          <Link to={`/feeds/${feed.id}`}>
+          <button type="button" className="feed-card-trigger" onClick={() => onSelect(feed.id)} aria-expanded={expanded}>
             {feed.burgerName}
-          </Link>
+          </button>
         </h3>
 
         {/* 별점 */}
@@ -52,6 +63,23 @@ const FeedCard = ({ feed }) => {
           {feed.content}
         </p>
 
+        <button
+          type="button"
+          className={`like-button ${isLiked ? 'is-liked' : ''}`}
+          onClick={() => toggleLike(feed.id)}
+          aria-pressed={isLiked}
+          aria-label={`좋아요 ${likedBy.length}개${isLiked ? ', 취소하기' : ', 누르기'}`}
+        >
+          {isLiked ? '♥' : '♡'} {likedBy.length}
+        </button>
+
+        {/* 작성자 */}
+        {/* <p className="feed-author">
+          작성자: {author?.username ?? '알 수 없는 사용자'}
+        </p>
+         */}
+
+         
         {/* 작성일 */}
         <small className="feed-date">
           {feed.createdAt}
