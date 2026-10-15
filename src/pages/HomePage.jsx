@@ -50,9 +50,11 @@ const HomePage = () => {
         <p>아직 등록된 리뷰가 없어요.</p>
       ) : (
         <section className="feed-grid" aria-label="버거 리뷰 목록">
-          {feeds.map((feed) => (
-            <FeedCard key={feed.id} feed={feed} />
-          ))}
+          {[...feeds]
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .map((feed) => (
+              <FeedCard key={feed.id} feed={feed} />
+            ))}
         </section>
       )}
     </main>

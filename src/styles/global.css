@@ -1,6 +1,3 @@
-/* ==========================================
-  1. 폰트 및 CSS 변수 (Design Tokens)
-========================================== */
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap');
 
 :root {
@@ -17,10 +14,6 @@
   --shadow: 0 12px 34px rgba(44,24,16,.07);
 }
 
-
-/* ==========================================
-  2. 기본 태그 초기화 및 설정
-========================================== */
 * {
   box-sizing: border-box;
 }
@@ -49,18 +42,15 @@ a {
   text-decoration: none;
 }
 
-
-/* ==========================================
-  3. 공통 레이아웃 및 상단 네비게이션 (Topbar)
-========================================== */
+/* 탑바 스타일 */
 .topbar {
   height: 76px;
-  border-bottom: 1px solid rgba(232, 224, 210, 0.8);
+  border-bottom: 1px solid rgba(232, 224, 210, .8);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 max(28px, calc((100vw - 1160px) / 2));
-  background: rgba(255, 252, 245, 0.94);
+  padding: 0 max(28px, calc((100vw - 1160px)/2));
+  background: rgba(255, 252, 245, .94);
   position: sticky;
   top: 0;
   z-index: 20;
@@ -84,7 +74,7 @@ a {
   display: grid;
   place-items: center;
   font-size: 24px;
-  box-shadow: inset 0 -3px 0 rgba(44, 24, 16, 0.09);
+  box-shadow: inset 0 -3px 0 rgba(44,24,16,.09);
 }
 
 .brand small {
@@ -108,17 +98,14 @@ main {
   padding: 0 28px 72px;
 }
 
-
-/* ==========================================
-  4. 공통 버튼 스타일
-========================================== */
+/* 버튼 공통 */
 .btn {
   border: 0;
   border-radius: 12px;
   padding: 11px 17px;
   font-weight: 700;
   font-size: 13px;
-  transition: 0.18s transform, 0.18s background;
+  transition: .18s transform, .18s background;
 }
 
 .btn:hover {
@@ -129,6 +116,7 @@ main {
   background: var(--ink);
   color: white;
 }
+
 .btn-dark:hover {
   background: #4a2a1d;
 }
@@ -158,62 +146,76 @@ main {
   font-size: 17px;
 }
 
-
-/* ==========================================
-  5. 폼 및 입력 필드 공통 스타일 (FeedForm 등)
-========================================== */
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  margin-bottom: 15px;
+/* 히어로 */
+.hero {
+  text-align: center;
+  padding: 68px 0 38px;
 }
 
-.field label {
-  font-size: 12px;
+.eyebrow {
+  font-size: 10px;
   font-weight: 800;
+  letter-spacing: 3px;
+  color: var(--brown);
 }
 
-.field input, 
-.field select, 
-.field textarea {
-  width: 100%;
+.hero h1 {
+  font-size: clamp(42px, 6vw, 68px);
+  line-height: 1.12;
+  letter-spacing: -3.5px;
+  margin: 13px 0 14px;
+  font-weight: 900;
+}
+
+.hero h1 .highlight {
+  position: relative;
+  display: inline-block;
+  z-index: 0;
+}
+
+.hero h1 .highlight:after {
+  content: "";
+  position: absolute;
+  left: -3px;
+  right: -3px;
+  height: 15px;
+  bottom: 3px;
+  background: var(--yellow);
+  z-index: -1;
+  border-radius: 5px;
+  transform: rotate(-1.5deg);
+}
+
+.hero p {
+  color: var(--muted);
+  font-size: 15px;
+  margin: 0;
+}
+
+.hero-bottom {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  border-radius: 999px;
+  padding: 8px 13px;
+  background: #fff;
   border: 1px solid var(--line);
-  border-radius: 11px;
-  padding: 12px;
-  background: white;
-  outline: none;
-  font-size: 13px;
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.pill b {
   color: var(--ink);
 }
 
-.field textarea {
-  resize: vertical;
-  min-height: 90px;
-}
-
-.field input:focus, 
-.field select:focus, 
-.field textarea:focus {
-  border-color: var(--yellow);
-  box-shadow: 0 0 0 3px rgba(255, 184, 0, 0.15);
-}
-
-.field-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.form-submit {
-  width: 100%;
-  padding: 14px;
-  margin-top: 5px;
-}
-
-
 /* ==========================================
-  6. 카드, 상세 화면 및 댓글 스타일 (CommentSection 등)
+  피드 그리드 및 카드 디자인 (이미지 비율 고정 수정 완료)
 ========================================== */
 .feed-grid {
   display: grid;
@@ -222,8 +224,136 @@ main {
 }
 
 .feed-card {
-  min-width: 0;
-  transition: opacity 0.2s, filter 0.2s, transform 0.2s;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(44, 24, 16, 0.04);
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.feed-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+
+/* 팀원 코드의 FeedCard 이미지 링크 영역 정사각형 비율 고정 */
+.feed-card > a:first-child {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: var(--soft);
+}
+
+.feed-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s;
+}
+
+.feed-card:hover .feed-card-image {
+  transform: scale(1.035);
+}
+
+.feed-card-no-image {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* 카드 내부 콘텐츠 */
+.feed-card-content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.feed-brand {
+  font-size: 10px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--brown);
+  font-weight: 800;
+  margin: 0;
+}
+
+.feed-card-content h3 {
+  font-size: 17px;
+  letter-spacing: -0.6px;
+  margin: 0;
+}
+
+.feed-card-content h3 a {
+  color: var(--ink);
+  text-decoration: none;
+  background: none;
+  width: auto;
+  aspect-ratio: unset;
+}
+
+.feed-card-content h3 a:hover {
+  color: var(--brown);
+}
+
+.feed-rating {
+  font-size: 12px;
+  color: var(--brown);
+  font-weight: 800;
+  margin: 0;
+}
+
+.feed-description {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.feed-date {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.feed-notice {
+  display: inline-block;
+  background: #fff4cc;
+  border: 1px solid #f4d56b;
+  color: #8b6b00;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  width: fit-content;
+  margin-bottom: 2px;
+}
+
+/* 상세 페이지 및 댓글 */
+.feed-detail, .detail {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 26px;
 }
 
 .comments {
@@ -277,10 +407,9 @@ main {
   background: white;
 }
 
-/* 댓글 입력창 포커스 효과 (추가됨) */
 .comment-form input:focus {
   border-color: var(--yellow);
-  box-shadow: 0 0 0 3px rgba(255, 184, 0, 0.15);
+  box-shadow: 0 0 0 3px rgba(255,184,0,.15);
 }
 
 .comment-form button {
@@ -293,18 +422,48 @@ main {
   font-weight: 700;
 }
 
-/* 비활성화(disabled)된 버튼 및 입력창 처리 스타일 (추가됨) */
-.btn:disabled,
-.comment-form button:disabled,
-.comment-form input:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+/* 폼 필드 */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 15px;
 }
 
+.field label {
+  font-size: 12px;
+  font-weight: 800;
+}
 
-/* ==========================================
-  7. 인증 카드 및 공통 컴포넌트
-========================================== */
+.field input, .field select, .field textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  padding: 12px;
+  background: white;
+  outline: none;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.form-submit {
+  width: 100%;
+  padding: 14px;
+  margin-top: 5px;
+}
+
+/* 인증 카드 */
 .auth-card {
   max-width: 440px;
   margin: 0 auto;
@@ -344,7 +503,7 @@ main {
 }
 
 .empty {
-  grid-column: 1 / -1;
+  grid-column: 1/-1;
   text-align: center;
   padding: 70px 20px;
   background: white;
@@ -360,10 +519,7 @@ main {
   margin-bottom: 7px;
 }
 
-
-/* ==========================================
-  8. 반응형 미디어 쿼리 (모바일 대응)
-========================================== */
+/* 반응형 미디어 쿼리 */
 @media(max-width: 760px) {
   .topbar {
     height: 66px;
@@ -383,6 +539,11 @@ main {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 23px 12px;
   }
+  .feed-detail, .detail {
+    grid-template-columns: 1fr;
+    padding: 15px;
+    gap: 19px;
+  }
 }
 
 @media(max-width: 430px) {
@@ -392,4 +553,41 @@ main {
   .field-row {
     grid-template-columns: 1fr;
   }
+}
+
+.home-page h1 {
+  font-size: clamp(36px, 5vw, 52px);
+  line-height: 1.15;
+  letter-spacing: -2.5px;
+  margin: 10px 0 20px;
+  font-weight: 900;
+  color: var(--ink);
+}
+
+.home-page .btn-yellow {
+  background: var(--yellow);
+  color: var(--ink);
+  font-weight: 800;
+  border-radius: 12px;
+  padding: 12px 20px;
+  box-shadow: 0 4px 12px rgba(255, 184, 0, 0.25);
+  margin-bottom: 24px;
+  display: inline-block;
+}
+
+.feed-card h3,
+.feed-card-content h3,
+.card-meta h3 {
+  font-size: 17px !important;
+  font-weight: 800 !important; /* 굵게 설정 */
+  letter-spacing: -0.6px;
+  color: var(--ink) !important;
+  margin: 6px 0 5px !important;
+}
+
+.feed-card h3 a,
+.feed-card-content h3 a,
+.card-meta h3 a {
+  font-weight: 800 !important;
+  color: var(--ink) !important;
 }
