@@ -9,10 +9,6 @@ const FeedCard = ({ feed, onSelect, expanded = false }) => {
     id => String(id) === String(currentUser.id)
   ));
 
-  const author = users.find(
-    user => String(user.id) === String(feed.userId)
-  );
-
   return (
     <article className="feed-card">
 
@@ -79,7 +75,7 @@ const FeedCard = ({ feed, onSelect, expanded = false }) => {
         </p>
          */}
 
-         
+
         {/* 작성일 */}
         <small className="feed-date">
           {feed.createdAt}

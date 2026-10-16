@@ -1,22 +1,22 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { useFeed } from '../context/FeedContext';
 import { useAuth } from '../context/AuthContext';
 
 import FeedForm from '../components/FeedForm';
 import CommentSection from '../components/CommentSection';
-import { Link } from 'react-router-dom';
 
-function FeedDetail({ feedId, onClose, isFullPage = false  }) {
+function FeedDetail({ feedId, onClose, isFullPage = false }) {
 
   // URL에서 게시글 ID 가져오기
   const id = feedId;
 
   // Context에서 게시글 데이터와 함수 가져오기
-  const { feeds, updateFeed, deleteFeed, toggleLike } = useFeed();
+  const { feeds, updateFeed, deleteFeed } = useFeed();
 
   // 현재 로그인한 사용자 정보
-  const { currentUser } = useAuth();
+  const { currentUser, users } = useAuth();
 
   // 수정 화면 표시 여부
   const [isEditing, setIsEditing] = useState(false);
@@ -31,23 +31,20 @@ function FeedDetail({ feedId, onClose, isFullPage = false  }) {
     return (
       <div className="container">
         <h2>게시글을 찾을 수 없습니다.</h2>
-        <button type="button" onClick={onClose}>홈으로 돌아가기</button>
+        <button type="button" onClick={onClose}>목록으로 돌아가기</button>
       </div>
     );
   }
 
   // 본인이 작성한 게시글인지 확인
+  const author = users.find(
+    (user) => String(user.id) === String(feed.userId)
+  );
   const isAuthor = currentUser?.id === feed.userId;
   const isAdmin = currentUser?.role === 'admin';
   const canManage = isAuthor || isAdmin;
-  const likedBy = feed.likedBy ?? [];
-  const isLiked = Boolean(currentUser && likedBy.some(
-    userId => String(userId) === String(currentUser.id)
-  ));
-
   // 게시글 수정
   const handleUpdate = (updatedData) => {
-
     if (!canManage) {
       alert('게시글 작성자 또는 관리자만 수정할 수 있습니다.');
       return;
@@ -62,12 +59,11 @@ function FeedDetail({ feedId, onClose, isFullPage = false  }) {
 
   // 게시글 삭제
   const handleDelete = () => {
-
-    
     if (!canManage) {
       alert('게시글 작성자 또는 관리자만 삭제할 수 있습니다.');
       return;
     }
+
     const isConfirmed = window.confirm(
       '정말 이 게시글을 삭제하시겠습니까?'
     );
@@ -91,10 +87,7 @@ function FeedDetail({ feedId, onClose, isFullPage = false  }) {
         ← 목록으로
       </button>
       {!isFullPage && (
-        <Link
-          to={`/feeds/${feed.id}`}
-          className="btn btn-outline detail-page-link"
-        >
+        <Link to={`/feeds/${feed.id}`} className="btn btn-outline detail-page-link">
           전체 페이지로 보기
         </Link>
       )}
@@ -180,19 +173,10 @@ function FeedDetail({ feedId, onClose, isFullPage = false  }) {
 
             {/* 작성자 */}
             <p>
-              작성자 ID: {feed.userId}
+              작성자 ID: {author?.username || '알 수 없는 사용자'}
             </p>
 
-            <button
-              type="button"
-              className={`like-button ${isLiked ? 'is-liked' : ''}`}
-              onClick={() => toggleLike(feed.id)}
-              aria-pressed={isLiked}
-              aria-label={`좋아요 ${likedBy.length}개${isLiked ? ', 취소하기' : ', 누르기'}`}
-            >
-              {isLiked ? '♥' : '♡'} 좋아요 {likedBy.length}
-            </button>
-
+            {/* 작성자 또는 관리자에게 수정/삭제 버튼 표시 */}
             {canManage && (
 
               <div
