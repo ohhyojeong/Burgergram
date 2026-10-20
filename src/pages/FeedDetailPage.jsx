@@ -17,7 +17,7 @@ function FeedDetailPage() {
   const { feeds, updateFeed, deleteFeed } = useFeed();
 
   // 현재 로그인한 사용자 정보
-  const { currentUser } = useAuth();
+  const { currentUser, users } = useAuth();
 
   // 수정 화면 표시 여부
   const [isEditing, setIsEditing] = useState(false);
@@ -38,7 +38,10 @@ function FeedDetailPage() {
   }
 
   // 본인이 작성한 게시글인지 확인
-  const isAuthor = currentUser?.id === feed.userId;
+  const author = users.find(
+  (user) => String(user.id) === String(feed.userId)
+);
+const isAuthor = currentUser?.id === feed.userId;
 
   // 게시글 수정
   const handleUpdate = (updatedData) => {
@@ -167,7 +170,7 @@ function FeedDetailPage() {
 
             {/* 작성자 */}
             <p>
-              작성자 ID: {feed.userId}
+              작성자 ID: {author?.username || '알 수 없는 사용자'}
             </p>
 
             {/* 본인 게시글인 경우 수정/삭제 버튼 */}
